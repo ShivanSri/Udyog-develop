@@ -1,0 +1,157 @@
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Choose Resume</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #expAdd="ngForm" (ngSubmit)="ApplyJob()">
+      <div class=" row">
+        <div class=" col-md-6">
+          <div class=" form-group" [ngClass]="{ focused: focus12 === true }">
+            <label class=" form-control-label" for="resumaeName">
+              Resume Name
+            </label>
+            <div class=" input-group input-group-merge">
+              <div class=" input-group-prepend">
+                <span class=" input-group-text">
+                  <i class="fa fa-building" aria-hidden="true"></i>
+                </span>
+              </div>
+              <select class=" form-control" data-toggle="select" id="resumaeName" (focus)="focus12 = true"
+                (blur)="focus12 = false" [(ngModel)]="application.resume" name="resumaeName" #resumaeName="ngModel"
+                required>
+                <option *ngFor="let doc of profile_docs" [value]="doc.id">
+                  {{doc.fileName}} ({{doc.alias_name}} - {{doc.created_at | date: 'dd-MM-YYYY h:mm a'}})
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" row">
+        <div class="col-md-8 modal-footer">
+
+        </div>
+        <div class="col-md-2 modal-footer">
+          <button type="submit" class="btn btn-primary mt-4" [disabled]="!expAdd.form.valid">
+            Apply
+          </button>
+        </div>
+        <div class="col-md-2 modal-footer">
+          <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #modalDefault>
+  <div class=" modal-header">
+    <h6 class=" modal-title" id="modal-title-default">
+      Job Description
+    </h6>
+
+    <button aria-label="Close" class=" close" data-dismiss="modal" type="button" (click)="defaultModal.hide()">
+      <span aria-hidden="true"> × </span>
+    </button>
+  </div>
+
+  <div class=" modal-body">
+    <p>
+      {{jobDescription}}
+    </p>
+  </div>
+
+  <div class=" modal-footer">
+    <button class=" btn btn-link ml-auto" data-dismiss="modal" type="button" (click)="defaultModal.hide()">
+      Close
+    </button>
+  </div>
+</ng-template>
+<div class=" header bg-danger pb-6">
+  <div class=" container-fluid">
+    <div class=" header-body">
+      <div class=" row align-items-center py-4">
+        <div class=" col-lg-2 col-7">
+          <h6 class=" h2 text-white d-inline-block mb-0">Job Search</h6>
+        </div>
+      </div>
+      <div class=" row align-items-center py-4">
+        <div class=" col-lg-4 col-7">
+          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+            <div class="form-group mb-0" Class="focused">
+              <div class="input-group input-group-alternative input-group-merge">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input class="form-control" placeholder="Search" type="text" (focus)="focus = true"
+                  (blur)="focus = false" [(ngModel)]="searchKey" #search="ngModel" required name="search" />
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class=" col-lg-8 col-7">
+          <button class=" btn btn-icon btn-primary" type="button" (click)="SearchJobs()">
+            <span class=" btn-inner--icon">
+              <i class=" ni ni-bag-17"> </i>
+            </span>
+            <span class=" btn-inner--text"> Search </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class=" container-fluid mt--6">
+  <div class=" row card-wrapper">
+    <!-- <div class=" col-lg-4">
+      <div class=" card">
+        <div class=" card-header">
+          <p class=" h3 mb-0">job Name - Location Name</p>
+          <div><p class=" h5 mb-0">Company Name</p></div>
+        </div>
+
+        <div class=" card-body">
+          <p class=" card-text mb-4">Job Desc</p>
+          <div>
+            <p class=" card-text mb-4"><i class="fa fa-rupee-sign" aria-hidden="true"></i> Salary    <i class="fas fa-envelope" aria-hidden="true"></i> Experience</p>
+          </div>
+          <a class=" btn btn-primary" href="javascript:void(0)" (click)="checkResumeCount(job,template)">
+            Apply
+          </a>
+        </div>
+      </div>
+    </div> -->
+    <div class=" col-lg-4" *ngFor="let job of joblist">
+      <div class=" card">
+        <div class=" card-header">
+          <p class=" h3 mb-0">{{job.job_name}}</p>
+          <p class=" h5 mb-0">{{job.location}}</p>
+          <div>
+            <p class=" h5 mb-0">{{job.company.company_name}}</p>
+          </div>
+        </div>
+
+        <div class=" card-body">
+          <div style="max-height: 100px; height:100px;">
+            <p class=" card-text mb-4">{{(!job.readMore) ? job.job_desc : job.job_desc | slice:0:50}} <span
+                *ngIf="job.readMore">...</span>
+              <a href="javascript:;" *ngIf="job.readMore" (click)="openDefaultModal(modalDefault, job.job_desc)">[Read More]</a></p>
+          </div>
+          <div>
+            <p class=" card-text mb-4">Salary: <i class="fa fa-rupee-sign" aria-hidden="true"></i> {{job.salary}}, Exp:
+              <i class="fas fa-envelope" aria-hidden="true"></i> {{job.experience}}</p>
+          </div>
+          <a class=" btn btn-primary" href="javascript:void(0)" (click)="checkResumeCount(job,template)"
+            *ngIf="!job.applied">
+            Apply
+          </a>
+          <button *ngIf="job.applied" class=" btn btn-success" type="button">Applied</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

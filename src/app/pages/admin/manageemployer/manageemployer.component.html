@@ -1,0 +1,282 @@
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Update Employer</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #userupdate="ngForm" (ngSubmit)="updateUser()">
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus0 === true }">
+                        <label class=" form-control-label" for="firstname">
+                            First Name
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Enter FirstName" type="text"
+                                [(ngModel)]="user.first_name" name="firstname" #firstname="ngModel"
+                                (focus)="focus = true" (blur)="focus = false" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus12 === true }">
+                        <label class=" form-control-label" for="lastname">
+                            Last Name
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Enter LastName" type="text"
+                                [(ngModel)]="user.last_name" name="lastname" #lastname="ngModel" (focus)="focus = true"
+                                (blur)="focus = false" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus2 === true }">
+                        <label class=" form-control-label" for="dob">
+                            DOB
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="Enter DOB" type="date" [(ngModel)]="user.dob"
+                                name="dob" #dob="ngModel" (focus)="focus = true" (blur)="focus = false" required />
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus14 === true }">
+                        <label class=" form-control-label" for="mobile_no">
+                            Mobile
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="Enter Mobile Number" type="number"
+                                [(ngModel)]="user.mobile_no" name="mobileno" #mobileno="ngModel" minlength="10"
+                                maxlength="15" (focus)="focus = true" (blur)="focus = false" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus4 === true }">
+                        <label class=" form-control-label" for="email">
+                            Email
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-envelope'></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Enter Email Address" type="email"
+                                [(ngModel)]="user.email" name="email" #email="ngModel" (focus)="focus = true"
+                                (blur)="focus = false" required />
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus6 === true }">
+                        <label class=" form-control-label" for="password">
+                            Roles
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-badge'></i>
+                                </span>
+                            </div>
+                            <ngx-bootstrap-multiselect [options]="roles" class=" form-control" data-toggle="select"
+                                id="preferredlocation" (focus)="focus8 = true" (blur)="focus8 = false" multiple
+                                [(ngModel)]="user.role" name="preferredlocation" #preferredlocation="ngModel" required>
+                            </ngx-bootstrap-multiselect>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus5 === true }">
+                        <label class=" form-control-label" for="username">
+                            Permission Mode
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-user-o'></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Enter Permission Mode" type="text"
+                                [(ngModel)]="user.permissions_mode" name="username" #username="ngModel"
+                                (focus)="focus = true" (blur)="focus = false" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" row">
+                <div class="col-md-7 modal-footer">
+
+                </div>
+                <div class="col-md-1 modal-footer">
+                    <button type="submit" class="btn btn-primary mt-4" [disabled]="!userupdate.form.valid">
+                        Update
+                    </button>
+                </div>
+                <div class="col-md-2 modal-footer" style="margin-left:4%">
+                    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</ng-template>
+
+
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+        <div class=" header-body">
+            <div class=" row align-items-center py-4">
+                <div class=" col-lg-6 col-7">
+                    <h6 class=" h2 text-white d-inline-block mb-0">Manage Employer</h6>
+
+                    <nav aria-label="breadcrumb" class=" d-none d-md-inline-block ml-md-4">
+                        <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                            </li>
+
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> Admin </a>
+                            </li>
+
+                            <li aria-current="page" class=" breadcrumb-item active">
+                                Manage Employer
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <!-- <div class=" col-lg-6 col-5 text-right">
+                    <a class=" btn btn-sm btn-neutral" href="javascript:void(0)" (click)="addcompany(template)"> Add Companies
+                    </a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class=" container-fluid mt--6">
+    <div class=" row">
+        <div class=" col">
+            <div class=" card">
+                <div class=" card-header">
+                    <h3 class=" mb-0">Employer</h3>
+
+                </div>
+                <div class="dataTables_wrapper py-4">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length" id="datatable_length">
+                                <label>
+                                    Show
+                                    <select name="datatable_length" aria-controls="datatable"
+                                        class="form-control form-control-sm" (change)="entriesChange($event)">
+                                        <option value="10" [selected]="entries == 10">10</option>
+                                        <option value="25" [selected]="entries == 25">25</option>
+                                        <option value="50" [selected]="entries == 50">50</option>
+                                        <option value="-1" [selected]="entries == -1">All</option>
+                                    </select>
+                                    entries
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div id="datatable_filter" class="dataTables_filter">
+                                <label>
+                                    <input type="search" class="form-control form-control-sm"
+                                        placeholder="Search records" aria-controls="datatable"
+                                        (keyup)="filterTable($event)" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ngx-datatable id="print-section" class="bootstrap selection-cell" [columnMode]="'force'"
+                        [headerHeight]="50" [footerHeight]="60" [rowHeight]="'auto'"
+                        [limit]="entries != -1 ? entries : undefined" [rows]="filteredusers" [selected]="selected"
+                        (activate)="onActivate($event)" (select)="onSelect($event)">
+                        <ngx-datatable-column name="firstname">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.first_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="lastname">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.last_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="dob">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.dob}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="mobile">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.mobile_no}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="email"></ngx-datatable-column>
+                        <ngx-datatable-column name="company_name">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.company_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Actions">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <a class="table-action" tooltip="Edit User" placement="top" href="javascript:void(0)"
+                                    (click)="editUser(template, row)">
+                                    <i class=" fas fa-user-edit"> </i>
+                                </a>
+                                <a class="table-action" tooltip="Edit Profile" placement="top"
+                                    href="javascript:void(0)">
+                                    <i class=" fas fa-edit"> </i>
+                                </a>
+                                <a class="table-action" tooltip="Reset Password" placement="top"
+                                    href="javascript:void(0)" (click)="resetPassword(row.id)">
+                                    <i class=" fas fa-key"> </i>
+                                </a>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="card">
+    <div class=" card-header">
+        <p class=" h3 mb-0">{{job.job_name}}</p>
+        <p class=" h5 mb-0">{{job.location}}</p>
+        <div>
+            <p class=" h5 mb-0">{{job.company.company_name}}</p>
+        </div>
+    </div>
+
+    <div class=" card-body">
+        <div style="max-height: 100px; height:100px;">
+            <p class=" card-text mb-4">{{(!job.readMore) ? job.job_desc : job.job_desc | slice:0:50}} <span
+                    *ngIf="job.readMore">...</span>
+                <a href="javascript:;" *ngIf="job.readMore" (click)="openDefaultModal(modalDefault, job.job_desc)">[Read
+                    More]</a></p>
+        </div>
+        <div>
+            <p class=" card-text mb-4">Salary: <i class="fa fa-rupee-sign" aria-hidden="true"></i> {{job.salary}}, Exp:
+                <i class="fas fa-envelope" aria-hidden="true"></i> {{job.experience}}</p>
+        </div>        
+    </div>
+</div>

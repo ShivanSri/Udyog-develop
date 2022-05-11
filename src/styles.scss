@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+button.dropdown-toggle {
+    position: relative;
+    padding: 9px 2px 12px 0px;
+    margin-top: -10px;
+    background-color: white;
+    border: 1px solid dee2e6;
+    border: 1px solid #dee2e6;
+    color: dimgrey;
+}
+.card-header.panel-enabled {
+    cursor: pointer;
+    background-color: royalblue;
+    // background-color: gainsboro;
+    /* background: content-box; */
+    border: 1px solid darkgray;
+    padding: 2px 10px 25px 0px;
+    border-radius: inherit;
+}
+button.btn.btn-link.ng-star-inserted {
+    text-align: center !important;
+    font-family: 'Open Sans';
+    font-size: inherit;
+    text-overflow: inherit;
+    left: 20px;
+    top: 10px;
+    color: yellow;
+    font-weight:600;
+}
+label.form-control-label {
+    //  color: #5e72e4 !important;
+     color: #009 !important;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+// .form-control-label[_ngcontent-kod-c398] {
+//     color: #5e72e4 !important;
+//     color: #009;
+//     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+//     }

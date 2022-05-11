@@ -1,0 +1,292 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+        <div class=" header-body">
+            <div class=" row align-items-center py-4">
+                <div class=" col-lg-6 col-7">
+                    <h6 class=" h2 text-white d-inline-block mb-0">My Profile</h6>
+
+                    <nav aria-label="breadcrumb" class=" d-none d-md-inline-block ml-md-4">
+                        <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                            </li>
+
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> Employer </a>
+                            </li>
+
+                            <li aria-current="page" class=" breadcrumb-item active">
+                                Profile
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class=" container-fluid mt--6">
+    <div class=" row">
+        <div class=" col">
+            <div class=" card">
+                <div class=" card-header border-0">
+                    <h3 class=" mb-0">Profile</h3>
+                </div>
+                <div class=" table-responsive">
+                    <div id='gfg'>
+                        <accordion [isAnimated]="true">
+                            <accordion-group heading="Basic Details">
+                                <div class=" card-body">
+                                    <form #basicprofile="ngForm" (ngSubmit)="createProfile()">
+                                        <div class="row">
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus === true }">
+                                                    <label class=" form-control-label" for="mobileNo">
+                                                        Mobile No
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                             <i class="fa fa-mobile"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input class=" form-control" placeholder="Mobile No" type="text"
+                                                            (focus)="focus = true" (blur)="focus = false" id="mobileNo"
+                                                            required [(ngModel)]="profile.mobile_no" name="mobileno"
+                                                            #mobileno="ngModel" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus === true }">
+                                                    <label class=" form-control-label" for="dob">
+                                                        DOB
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                               <i class="fa fa-calendar-check-o"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input class=" form-control" placeholder="Date Of Birth" type="date"
+                                                            (focus)="focus = true" (blur)="focus = false" id="dob"
+                                                            required [(ngModel)]="profile.company_details.employers[0].dob" name="dob"
+                                                            #dob="ngModel" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                                    
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus === true }">
+                                                    <label class=" form-control-label" for="designation">
+                                                        Designation
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                              <i class="fa fa-briefcase"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input class=" form-control" placeholder="Designation" type="text"
+                                                            (focus)="focus = true" (blur)="focus = false" id="designation"
+                                                            required [(ngModel)]="profile.designation" name="designation"
+                                                            #designation="ngModel" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                            <div class="row">
+                                                <div class=" col-md-4">
+                                                    <div class=" form-group" [ngClass]="{ focused: focus10 === true }">
+                                                        <label class=" form-control-label" for="address">
+                                                            Address
+                                                        </label>
+                                                        <div class=" input-group input-group-merge">
+                                                            <div class=" input-group-prepend">
+                                                                <span class=" input-group-text">
+                                                                    <i class='fa fa-address-card'></i>
+                                                                </span>
+                                                            </div>
+                                                            <textarea class=" form-control" id="address" resize="none"
+                                                                rows="3" cols ="7" placeholder="Address" (focus)="focus10 = true"
+                                                                (blur)="focus10 = false" [(ngModel)]="profile.address"
+                                                                name="address" #address="ngModel"></textarea>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class=" col-md-4">
+                                                    <div class=" form-group" [ngClass]="{ focused: focus11 === true }">
+                                                        <label class=" form-control-label" for="pincode">
+                                                            Pincode
+                                                        </label>
+                                                        <div class=" input-group input-group-merge">
+                                                            <div class=" input-group-prepend">
+                                                                <span class=" input-group-text">
+                                                                    <i class='fa fa-map-marker'></i>
+                                                                </span>
+                                                            </div>
+
+                                                            <input class=" form-control" placeholder="Pincode"
+                                                                type="number" (focus)="focus11 = true"
+                                                                (blur)="focus11 = false" id="pincode"
+                                                                [(ngModel)]="profile.pincode" name="pincode"
+                                                                #pincode="ngModel" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class=" col-md-4">
+                                                    <button type="submit" class="btn btn-primary mt-4"
+                                                        [disabled]="!basicprofile.form.valid">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </accordion-group>
+
+                            <!-- <accordion-group heading="Company Details">
+                                <div class=" card-body">
+                                    <form #companyprofile="ngForm" (ngSubmit)="saveCompanyDetails()">
+                                        <div class=" row">
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus === true }">
+                                                    <label class=" form-control-label" for="companyname">
+                                                        Company Name
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="fas fa-phone"> </i>
+                                                            </span>
+                                                        </div>
+                                                        <input class=" form-control" placeholder="Company Name"
+                                                            type="text" (focus)="focus = true" (blur)="focus = false"
+                                                            id="companyname" required
+                                                            [(ngModel)]="profile.company_details.company_name"
+                                                            name="companyname" #companyname="ngModel" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus1 === true }">
+                                                    <label class=" form-control-label" for="dob">
+                                                        Company Code
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="ni ni-album-2"> </i>
+                                                            </span>
+                                                        </div>
+
+                                                        <input class="form-control" placeholder="Enter company code"
+                                                            type="text" name="companycode" (focus)="focus1 = true"
+                                                            (blur)="focus1 = false" required id="companycode"
+                                                            [(ngModel)]="profile.company_details.company_code"
+                                                            name="companycode" #companycode="ngModel" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus3 === true }">
+                                                    <label class=" form-control-label" for="companydesc">
+                                                        Company Description
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="fas fa-venus-mars"></i>
+                                                            </span>
+                                                        </div>
+
+                                                        <input class="form-control"
+                                                            placeholder="Enter Company Description" type="text"
+                                                            name="companydesc" (focus)="focus1 = true"
+                                                            (blur)="focus1 = false" required id="companydesc"
+                                                            [(ngModel)]="profile.company_details.company_desc"
+                                                            name="companydesc" #companydesc="ngModel" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus10 === true }">
+                                                    <label class=" form-control-label" for="location">
+                                                        Location
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class='fa fa-address-card'></i>
+                                                            </span>
+                                                        </div>
+                                                        <select class=" form-control" data-toggle="select" id="location"
+                                                            (focus)="focus7 = true" (blur)="focus7 = false"
+                                                            placeholder="Location"
+                                                            [(ngModel)]="profile.company_details.location"
+                                                            name="location" #location="ngModel" required>
+                                                            <option *ngFor="let city of cities" [value]="city.id">
+                                                                {{city.name}}
+                                                            </option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus11 === true }">
+                                                    <label class=" form-control-label" for="website">
+                                                        Website
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class='fa fa-map-marker'></i>
+                                                            </span>
+                                                        </div>
+
+                                                        <input class=" form-control" placeholder="Website" type="text"
+                                                            (focus)="focus11 = true" (blur)="focus11 = false"
+                                                            id="website" [(ngModel)]="profile.company_details.website"
+                                                            name="website" #website="ngModel" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-4">
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class=" col-md-10">
+                                            </div>
+                                            <div class=" col-md-2">
+                                                <button type="submit" class="btn btn-primary mt-4"
+                                                    [disabled]="!companyprofile.form.valid">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </accordion-group> -->
+
+
+
+                        </accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

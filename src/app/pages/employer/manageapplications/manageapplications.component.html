@@ -1,0 +1,352 @@
+<!--<ng-template #template>-->
+    <!--<div class="modal-header">
+        <h4 class="modal-title pull-left">Create Jobs</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #jobAdd="ngForm" (ngSubmit)="createJobs()">
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus0 === true }">
+                        <label class=" form-control-label" for="jobname">
+                            Job Name
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Job Name" type="text" name="jobname"
+                                (focus)="focus0 = true" (blur)="focus0 = false" required id="jobname"
+                                [(ngModel)]="job.job_name" #jobname="ngModel" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus12 === true }">
+                        <label class=" form-control-label" for="companyname">
+                            Job Description
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Job Description" type="text" name="jobdesc"
+                                (focus)="focus1 = true" (blur)="focus1 = false" required id="jobdesc"
+                                [(ngModel)]="job.job_desc" #jobdesc="ngModel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus2 === true }">
+                        <label class=" form-control-label" for="jobtype">
+                            Job Type
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-building" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <select class=" form-control" data-toggle="select" id="jobtype" (focus)="focus2 = true"
+                                (blur)="focus2 = false" placeholder="Job Type" [(ngModel)]="job.job_type" name="jobtype"
+                                #jobtype="ngModel" required>
+                                <option value="Full Time">Full Time</option>
+                                <option value="Part Time">Part Time</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus14 === true }">
+                        <label class=" form-control-label" for="jDate">
+                            Position
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-building" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <select class=" form-control" data-toggle="select" id="position" (focus)="focus3 = true"
+                                (blur)="focus3 = false" placeholder="Job Type" [(ngModel)]="job.position"
+                                name="position" #position="ngModel" required>
+                                <option value="Manager">Manager</option>
+                                <option value="Developer">Developer</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus4 === true }">
+                        <label class=" form-control-label" for="rdate">
+                            Salary
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-calendar'></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Salary" type="text" name="salary"
+                                (focus)="focus4 = true" (blur)="focus4 = false" required id="salary"
+                                [(ngModel)]="job.salary" name="salary" #salary="ngModel" />
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus5 === true }">
+                        <label class=" form-control-label" for="rar">
+                            Experience
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-calendar'></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Experience" type="text" name="experience"
+                                (focus)="focus5 = true" (blur)="focus5 = false" required id="experience"
+                                [(ngModel)]="job.experience" name="experience" #experience="ngModel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus6 === true }">
+                        <label class=" form-control-label" for="rar">
+                            Location
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-location-arrow'></i>
+                                </span>
+                            </div>
+                            <select class=" form-control" data-toggle="select" id="crtloc" (focus)="focus6 = true"
+                                (blur)="focus6 = false" placeholder="Location" [(ngModel)]="job.location"
+                                name="currentlocation" #currentlocation="ngModel" required>
+                                <option *ngFor="let city of cities" [value]="city.id">
+                                    {{city.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus7 === true }">
+                        <label class=" form-control-label" for="rar">
+                            Owner
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-location-arrow'></i>
+                                </span>
+                            </div>
+                         <select class=" form-control" data-toggle="select" id="owner" (focus)="focus7 = true"
+                                (blur)="focus7 = false" placeholder="Owner" [(ngModel)]="job.owner" name="owner"
+                                #owner="ngModel" required>
+                                <option *ngFor="let user of users" [value]="user.id">
+                                    {{user.first_name}} , {{user.last_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class="col-md-8 modal-footer">
+
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="submit" class="btn btn-primary mt-4" [disabled]="!jobAdd.form.valid">
+                        {{jobBtnText}}
+                    </button>
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>-->
+<!--</ng-template>-->
+
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+        <div class=" header-body">
+            <div class=" row align-items-center py-4">
+                <div class=" col-lg-6 col-7">
+                    <h6 class=" h2 text-white d-inline-block mb-0">Application</h6>
+
+                    <nav aria-label="breadcrumb" class=" d-none d-md-inline-block ml-md-4">
+                        <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                            </li>
+
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> Employer </a>
+                            </li>
+
+                            <li aria-current="page" class=" breadcrumb-item active">
+                                Manage Applications
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+              <!-- <div class=" col-lg-6 col-5 text-right">
+                    <a class=" btn btn-sm btn-neutral" href="javascript:void(0)" (click)="addapplication()"> Add Application
+                    </a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class=" container-fluid mt--6" *ngIf="show">
+   <form #jobAdd="ngForm" (ngSubmit)="createApplications()">
+
+                                        <div class=" row">
+                                        <div class=" col-md-6"
+                                            *ngIf="selectedDocument.document_type_value != undefined && selectedDocument.alias_name != undefined && selectedDocument.alias_name.trim() != '' ">
+                                            <div class=" form-group" [ngClass]="{ focused: focus29 === true }">
+                                                <label class=" form-control-label" for="dob">
+                                                    File
+                                                </label>
+                                                <div class=" input-group input-group-merge">
+                                                    <div class=" custom-file">
+
+                                                        <input class=" custom-file-input" id="customFileLang" lang="en"
+                                                            type="file" />
+                                                        <label class=" custom-file-label" for="customFileLang">
+                                                            Select file
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+             
+                <div class="col-md-2 modal-footer">
+                    <button type="submit" class="btn btn-primary mt-4" [disabled]="!jobAdd.form.valid">
+                        {{jobBtnText}}
+                    </button>
+                </div>
+                <div class="col-md-1 close-footer">
+                    <button type="button" class="btn btn-default" (click)="modalRef.hide();ClearValues()">Close</button>
+                </div>
+                 <div class="col-md-2 back-footer">
+                    <button type="button" class="btn btn-info" (click)="ShowHide()">Back</button>
+                </div>
+        </form>
+</div> -->
+
+
+<div class=" container-fluid mt--6" *ngIf="hide">
+    <div class=" row">
+        <div class=" col">
+            <div class=" card">
+                <div class=" card-header">
+                    <h3 class=" mb-0">Manage Applications</h3>
+
+                </div>
+                <div class="dataTables_wrapper py-4">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length" id="datatable_length">
+                                <label>
+                                    Show
+                                    <select name="datatable_length" aria-controls="datatable"
+                                        class="form-control form-control-sm" (change)="entriesChange($event)">
+                                        <option value="10" [selected]="entries == 10">10</option>
+                                        <option value="25" [selected]="entries == 25">25</option>
+                                        <option value="50" [selected]="entries == 50">50</option>
+                                        <option value="-1" [selected]="entries == -1">All</option>
+                                    </select>
+                                    entries
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div id="datatable_filter" class="dataTables_filter">
+                                <label>
+                                    <input type="search" class="form-control form-control-sm"
+                                        placeholder="Search records" aria-controls="datatable"
+                                        (keyup)="filterTable($event)" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ngx-datatable id="print-section" class="bootstrap selection-cell" [columnMode]="'force'"
+                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                        [limit]="entries != -1 ? entries : undefined" [rows]="applicationlist" [selected]="selected"
+                        [selectionType]="'multiClick'" (activate)="onActivate($event)" (select)="onSelect($event)">
+                        <ngx-datatable-column name="firstname">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.user_details.first_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="lastname">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.user_details.last_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="jobname">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.job_details.job_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="job_code">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                             {{row.job_details.job_code}}
+                             </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="jobdesc">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                             {{row.job_details.job_desc}}
+                             </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="jobtype">
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                             {{row.job_details.job_type}}
+                             </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="position">
+                         <ng-template let-row="row" ngx-datatable-cell-template>
+                             {{row.job_details.position}}
+                             </ng-template>
+                        </ngx-datatable-column>
+                       <!-- <ngx-datatable-column name="Actions">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <a class="table-action"  tooltip="Edit Job" placement="top"
+                                href="javascript:void(0)" (click)="updateJob(template, row)">
+                                <i class=" fas fa-edit"> </i>
+                            </a>
+                            </ng-template>
+                        </ngx-datatable-column>-->
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

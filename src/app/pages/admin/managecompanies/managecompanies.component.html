@@ -1,0 +1,252 @@
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Create Companies</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #companyAdd="ngForm" (ngSubmit)="createCompanies()">
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus0 === true }">
+                        <label class=" form-control-label" for="jobname">
+                            Company Name
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Company Name" type="text" name="companyname"
+                                (focus)="focus0 = true" (blur)="focus0 = false" required id="companyname"
+                                [(ngModel)]="company.company_name" #companyname="ngModel" />
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus2 === true }">
+                        <label class=" form-control-label" for="jobtype">
+                            Company Code
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-building" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="Company Name" type="text" name="companycode"
+                                (focus)="focus0 = true" (blur)="focus0 = false" required id="companycode"
+                                [(ngModel)]="company.company_code" #companycode="ngModel" />
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class=" row">
+                <div class=" col-md-12">
+                    <div class=" form-group" [ngClass]="{ focused: focus12 === true }">
+                        <label class=" form-control-label" for="companydesc">
+                            Company Description
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Company Description" type="text" name="companydesc"
+                                (focus)="focus1 = true" (blur)="focus1 = false" required id="companydesc"
+                                [(ngModel)]="company.company_desc" #companydesc="ngModel" maxlength="200" />
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div class=" row">                
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus6 === true }">
+                        <label class=" form-control-label" for="rar">
+                            Location
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-location-arrow'></i>
+                                </span>
+                            </div>
+                            <select class=" form-control" data-toggle="select" id="crtloc" (focus)="focus6 = true"
+                                (blur)="focus6 = false" placeholder="Location" [(ngModel)]="company.location"
+                                name="currentlocation" #currentlocation="ngModel" required>
+                                <option *ngFor="let city of cities" [value]="city.name">
+                                    {{city.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus7 === true }">
+                        <label class=" form-control-label" for="rar">
+                            Owner
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-location-arrow'></i>
+                                </span>
+                            </div>
+                            <select class=" form-control" data-toggle="select" id="owner" (focus)="focus7 = true"
+                                (blur)="focus7 = false" placeholder="Owner" [(ngModel)]="company.owner" name="owner"
+                                #owner="ngModel" required>
+                                <option *ngFor="let user of users" [value]="user.id">
+                                    {{user.first_name}} , {{user.last_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">                
+               
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus8 === true }">
+                        <label class=" form-control-label" for="rar">
+                            Web Site
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-building"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="website" type="text" name="website"
+                                (focus)="focus8 = true" (blur)="focus8 = false" required id="website"
+                                [(ngModel)]="company.website" name="website" #website="ngModel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class="col-md-8 modal-footer">
+
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="submit" class="btn btn-primary" [disabled]="!companyAdd.form.valid">
+                        {{companyBtnText}}
+                    </button>
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+        <div class=" header-body">
+            <div class=" row align-items-center py-4">
+                <div class=" col-lg-6 col-7">
+                    <h6 class=" h2 text-white d-inline-block mb-0">Manage Companies</h6>
+
+                    <nav aria-label="breadcrumb" class=" d-none d-md-inline-block ml-md-4">
+                        <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                            </li>
+
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> Admin </a>
+                            </li>
+
+                            <li aria-current="page" class=" breadcrumb-item active">
+                                Manage Companies
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <div class=" col-lg-6 col-5 text-right">
+                    <a class=" btn btn-sm btn-neutral" href="javascript:void(0)" (click)="addcompany(template)"> Add Companies
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class=" container-fluid mt--6">
+    <div class=" row">
+        <div class=" col">
+            <div class=" card">
+                <div class=" card-header">
+                    <h3 class=" mb-0">Manage Companies</h3>
+
+                </div>
+                <div class="dataTables_wrapper py-4">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length" id="datatable_length">
+                                <label>
+                                    Show
+                                    <select name="datatable_length" aria-controls="datatable"
+                                        class="form-control form-control-sm" (change)="entriesChange($event)">
+                                        <option value="10" [selected]="entries == 10">10</option>
+                                        <option value="25" [selected]="entries == 25">25</option>
+                                        <option value="50" [selected]="entries == 50">50</option>
+                                        <option value="-1" [selected]="entries == -1">All</option>
+                                    </select>
+                                    entries
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div id="datatable_filter" class="dataTables_filter">
+                                <label>
+                                    <input type="search" class="form-control form-control-sm"
+                                        placeholder="Search records" aria-controls="datatable"
+                                        (keyup)="filterTable($event)" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ngx-datatable id="print-section" class="bootstrap selection-cell" [columnMode]="'force'"
+                        [headerHeight]="50" [footerHeight]="60" [rowHeight]="'auto'" [scrollbarH]="true"
+                        [limit]="entries != -1 ? entries : undefined" [rows]="filteredcompanieslist" [selected]="selected"
+                        [sortType]="'multi'">
+                        <ngx-datatable-column name="companyname">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.company_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="companycode">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.company_code}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="companydesc">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.company_desc}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="location"></ngx-datatable-column>
+                        <ngx-datatable-column name="website"></ngx-datatable-column>
+                        <!-- <ngx-datatable-column name="owner"></ngx-datatable-column> -->
+                        <ngx-datatable-column name="Actions">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <a class="table-action"  tooltip="Edit Company" placement="top"
+                                href="javascript:void(0)" (click)="updateCompany(template, row)">
+                                <i class=" fas fa-edit"> </i>
+                            </a>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

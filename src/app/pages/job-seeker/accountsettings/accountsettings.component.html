@@ -1,0 +1,53 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+        <div class=" header-body">
+            <div class=" row align-items-center py-4">
+                <div class=" col-lg-6 col-md-9">
+                    <h6 class=" h2 text-white d-inline-block mb-0">Account Settings</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class=" container-fluid mt--6">
+    <div class=" row card-wrapper">
+        <div class=" col-lg-8">
+            <div class=" card">
+                <div class=" card-header">
+                    <h6 class=" h4 mb-0">Profile Status</h6>
+                </div>
+
+                <div class=" card-body">
+                    <div class=" row">
+                        <div class=" col-md-4">
+                            <div class=" form-group" [ngClass]="{ focused: focus === true }">
+                                <label class=" form-control-label" for="profilestaus">
+                                    Status
+                                </label>
+                                <div class=" input-group input-group-merge">
+                                    <div class=" input-group-prepend">
+                                        <span class=" input-group-text">
+                                            <i class="far fa-id-badge"></i>
+                                        </span>
+                                    </div>
+                                    <select class=" form-control" data-toggle="select"
+                                        id="profilestaus" (focus)="focus = true"
+                                        (blur)="focus = false" placeholder="Profile Type"
+                                        [(ngModel)]="profile.profile_status" name="profilestaus"
+                                        #profilestaus="ngModel" required>
+                                        <option value="available"> Available </option>
+                                        <option value="invisible"> Invisible </option>
+                                        <option value="deactivate"> Deactivate </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class=" btn btn-success" (click)="updateProfileStatus()"
+                        type="button">Update</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

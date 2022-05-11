@@ -1,0 +1,121 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+        <div class=" header-body">
+            <div class=" row align-items-center py-4">
+                <div class=" col-lg-6 col-7">
+                    <h6 class=" h2 text-white d-inline-block mb-0">Application</h6>
+
+                    <nav aria-label="breadcrumb" class=" d-none d-md-inline-block ml-md-4">
+                        <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                            </li>
+
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> Admin </a>
+                            </li>
+
+                            <li aria-current="page" class=" breadcrumb-item active">
+                                Manage Applications
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+              <!--  <div class=" col-lg-6 col-5 text-right">
+                    <a class=" btn btn-sm btn-neutral" href="javascript:void(0)" (click)="addapplication()"> Add Application
+                    </a>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class=" container-fluid mt--6">
+    <div class=" row">
+        <div class=" col">
+            <div class=" card">
+                <div class=" card-header">
+                    <h3 class=" mb-0">Manage Applications</h3>
+
+                </div>
+                <div class="dataTables_wrapper py-4">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length" id="datatable_length">
+                                <label>
+                                    Show
+                                    <select name="datatable_length" aria-controls="datatable"
+                                        class="form-control form-control-sm" (change)="entriesChange($event)">
+                                        <option value="10" [selected]="entries == 10">10</option>
+                                        <option value="25" [selected]="entries == 25">25</option>
+                                        <option value="50" [selected]="entries == 50">50</option>
+                                        <option value="-1" [selected]="entries == -1">All</option>
+                                    </select>
+                                    entries
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div id="datatable_filter" class="dataTables_filter">
+                                <label>
+                                    <input type="search" class="form-control form-control-sm"
+                                        placeholder="Search records" aria-controls="datatable"
+                                        (keyup)="filterTable($event)" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ngx-datatable id="print-section" class="bootstrap selection-cell" [columnMode]="'force'"
+                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                        [limit]="entries != -1 ? entries : undefined" [rows]="filteredApplicationList" [selected]="selected"
+                        [selectionType]="'multiClick'" (activate)="onActivate($event)" (select)="onSelect($event)">
+                        <ngx-datatable-column name="firstname">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.user_details.first_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="lastname">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.user_details.last_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="jobname">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.job_details.job_name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="job_code">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                             {{row.job_details.job_code}}
+                             </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="jobdesc">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                             {{row.job_details.job_desc}}
+                             </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="jobtype">
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                             {{row.job_details.job_type}}
+                             </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="position">
+                         <ng-template let-row="row" ngx-datatable-cell-template>
+                             {{row.job_details.position}}
+                             </ng-template>
+                        </ngx-datatable-column>
+                       <!-- <ngx-datatable-column name="Actions">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <a class="table-action"  tooltip="Edit Job" placement="top"
+                                href="javascript:void(0)" (click)="updateJob(template, row)">
+                                <i class=" fas fa-edit"> </i>
+                            </a>
+                            </ng-template>
+                        </ngx-datatable-column>-->
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

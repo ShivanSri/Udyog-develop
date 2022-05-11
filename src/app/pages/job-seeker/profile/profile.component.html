@@ -1,0 +1,1308 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+        <div class=" header-body">
+            <div class=" row align-items-center py-4">
+                <div class=" col-lg-6 col-7">
+                    <h6 class=" h2 text-white d-inline-block mb-0">{{'MyProfile' | translate}}</h6>
+
+                    <nav aria-label="breadcrumb" class=" d-none d-md-inline-block ml-md-4">
+                        <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                            </li>
+
+                            <li class=" breadcrumb-item">
+                                <a href="javascript:void(0)"> {{'JobSeeker' | translate}} </a>
+                            </li>
+
+                            <li aria-current="page" class=" breadcrumb-item active">
+                              {{'Profile' | translate}}
+                            </li>
+                        </ol>
+                    </nav>
+                    <span class="form-inline">
+                        <select 
+                            class="form-control" 
+                            #selectedLang 
+                            (change)="switchLang(selectedLang.value)">
+                          <option *ngFor="let language of translate.getLangs()" 
+                            [value]="language"
+                            [selected]="language === translate.currentLang">
+                            {{ language }}
+                          </option>
+                        </select>
+                      </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left"> {{ 'Add Experience' | translate }}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #expAdd="ngForm" (ngSubmit)="saveExperience()">
+            <div class=" row">
+                <div class=" col-md-12">
+                    <div class=" form-group" [ngClass]="{ focused: focus0 === true }">
+                        <label class=" form-control-label" for="companyname">
+                            {{ 'PresentCompany' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <label class=" custom-toggle mr-1">
+                                <input checked="checked" type="checkbox" [(ngModel)]="experience.present_company"
+                                    name="presentcompany" #presentcompany="ngModel" />
+
+                                <span class=" custom-toggle-slider rounded-circle" data-label-off="No"
+                                    data-label-on="Yes">
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus1 === true }">
+                        <label class=" form-control-label" for="companyname">
+                            {{ 'CompanyName' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-building" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <select class=" form-control" data-toggle="select" id="companyname" (focus)="focus1 = true"
+                                (blur)="focus1 = false" placeholder="Current Location"
+                                [(ngModel)]="experience.company_name" name="companyname" #companyname="ngModel"
+                                required>
+                                <option *ngFor="let company of companies" [value]="company.company_name">
+                                    {{company.company_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus2 === true }">
+                        <label class=" form-control-label" for="dob">
+                            {{ 'Designation' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Designation" type="text" name="designation"
+                                (focus)="focus2 = true" (blur)="focus2 = false" required id="designation"
+                                [(ngModel)]="experience.designation" #designation="ngModel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus3 === true }">
+                        <label class=" form-control-label" for="jDate">
+                            {{ 'JoiningDate' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-calendar'></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Joining Date" type="date" name="jdate"
+                                (focus)="focus3 = true" (blur)="focus3 = false" required id="jdate"
+                                [(ngModel)]="experience.start_date" name="jdate" #jdate="ngModel" [max]="getToday()" />
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus4 === true }">
+                        <label class=" form-control-label" for="rdate">
+                            {{ 'RelievingDate' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-calendar'></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Reliving Date" type="date" name="rdate"
+                                (focus)="focus4 = true" (blur)="focus4 = false" required="true" id="rdate"
+                                [(ngModel)]="experience.end_date" name="rdate" #rdate="ngModel" [max]="getToday()"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-12">
+                    <div class=" form-group" [ngClass]="{ focused: focus5 === true }">
+                        <label class=" form-control-label" for="rar">
+                            {{ 'RolesandResponsiblities' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-universal-access" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <textarea class=" form-control" id="rar" resize="none" rows="3"
+                                placeholder="Roles and Responsibilities" (focus)="focus5 = true"
+                                (blur)="focus5 = false" [(ngModel)]="experience.roles_and_responsibilites" name="rar"
+                                #rar="ngModel" required></textarea>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class="col-md-8 modal-footer">
+
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="submit" class="btn btn-primary mt-4" [disabled]="!expAdd.form.valid">
+                        {{expBtnText}}
+                    </button>
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="button" class="btn btn-default" (click)="modalRef.hide()">{{ 'Close' | translate }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #edutemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{ 'Add Education' | translate }}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="edumodalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #eduAdd="ngForm" (ngSubmit)="saveEducation()">
+            <div class=" row">
+                <div class=" col-md-12">
+                    <div class=" form-group" [ngClass]="{ focused: focus6 === true }">
+                        <label class=" form-control-label" for="highestqualification">
+                            {{ 'HighestQualification' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <label class=" custom-toggle mr-1">
+                                <input checked="checked" type="checkbox" [(ngModel)]="education.highest_qualification"
+                                    name="highestqualification" #highestqualification="ngModel"
+                                    id="highestqualification" />
+
+                                <span class=" custom-toggle-slider rounded-circle" data-label-off="No"
+                                    data-label-on="Yes">
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus7 === true }">
+                        <label class=" form-control-label" for="companyname">
+                            {{ 'CourseName' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fas fa-desktop"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="Course Name" type="text" name="coursename"
+                                (focus)="focus7 = true" (blur)="focus7 = false" required id="coursename"
+                                [(ngModel)]="education.course_name" #coursename="ngModel" />
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus8 === true }">
+                        <label class=" form-control-label" for="dob">
+                            {{ 'CourseSpecialization' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-university" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Course Specialization" type="text"
+                                name="coursespec" (focus)="focus8 = true" (blur)="focus8 = false" required
+                                id="course_spec" [(ngModel)]="education.course_specialization" #coursespec="ngModel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus9 === true }">
+                        <label class=" form-control-label" for="jDate">
+                            {{ 'University' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-university" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <select class=" form-control" data-toggle="select" id="university" (focus)="focus9 = true"
+                                (blur)="focus9 = false" placeholder="University"
+                                [(ngModel)]="education.university_name" name="universityname" #universityname="ngModel"
+                                required>
+                                <option *ngFor="let university of universities" [value]="university.university_name">
+                                    {{university.university_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus10 === true }">
+                        <label class=" form-control-label" for="poy">
+                            {{ 'Passed Out Year' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-calendar'></i>
+                                </span>
+
+                            </div>
+
+                            <input class="form-control" placeholder="Passed Out Year" type="year" name="poy"
+                                (focus)="focus10 = true" (blur)="focus10 = false" required id="poy"
+                                [(ngModel)]="education.passed_out_year" name="poy" #poy="ngModel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus11 === true }">
+                        <label class=" form-control-label" for="percentage">
+                            {{ 'Percentage' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fa fa-percent" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="Percentage" type="text" name="percentage"
+                                (focus)="focus11 = true" (blur)="focus11 = false" required id="percentage"
+                                [(ngModel)]="education.percentage" #percentage="ngModel" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class="col-md-8 modal-footer">
+
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="submit" class="btn btn-primary mt-4" [disabled]="!eduAdd.form.valid">
+                        {{eduBtnText}}
+                    </button>
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="button" class="btn btn-default" (click)="edumodalRef.hide()"> {{ 'Close' | translate }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #crttemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{ 'Certification' | translate }}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="crtmodalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #crtAdd="ngForm" (ngSubmit)="saveCertification()">
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus12 === true }">
+                        <label class=" form-control-label" for="certname">
+                            {{ 'Certification Name' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-certificate'></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="Certification Name" type="text" name="certname"
+                                (focus)="focus12= true" (blur)="focus12 = false" required id="certname"
+                                [(ngModel)]="certification.certification_name" #certname="ngModel" />
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus13 === true }">
+                        <label class=" form-control-label" for="provider">
+                          {{ 'Provider' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-toggle-up'></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="provider" type="text" name="provider"
+                                (focus)="focus13 = true" (blur)="focus13 = false" required id="provider"
+                                [(ngModel)]="certification.certification_provider" name="validity"
+                                #provider="ngModel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus14 === true }">
+                        <label class=" form-control-label" for="validity">
+                            {{ 'Validity' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-calendar'></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="Validity" type="date" name="validity"
+                                (focus)="focus14 = true" (blur)="focus14 = false" required id="validity"
+                                [(ngModel)]="certification.validity" name="validity" #validity="ngModel" />
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-6">
+                    <div class=" form-group" [ngClass]="{ focused: focus15 === true }">
+                        <label class=" form-control-label" for="awards">
+                             {{ 'Awards' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class="fas fa-award"></i>
+                                </span>
+                            </div>
+
+                            <input class="form-control" placeholder="awards" type="text" name="awards"
+                                (focus)="focus15 = true" (blur)="focus15 = false" required id="awards"
+                                [(ngModel)]="certification.awards" name="awards" #awards="ngModel" value="Awards" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class="col-md-8 modal-footer">
+
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="submit" class="btn btn-primary mt-4" [disabled]="!crtAdd.form.valid">
+                        {{crtBtnText}}
+                    </button>
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="button" class="btn btn-default" (click)="crtmodalRef.hide()">{{ 'Close' | translate }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #langtemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{ 'Language' | translate }}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="langmodalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #langAdd="ngForm" (ngSubmit)="saveLanguage()">
+            <div class=" row">
+                <div class=" col-md-8">
+                    <div class=" form-group" [ngClass]="{ focused: focus16 === true }">
+                        <label class=" form-control-label" for="langname">
+                            {{ 'Language' | translate }}
+                        </label>
+                        <div class=" input-group input-group-merge">
+                            <div class=" input-group-prepend">
+                                <span class=" input-group-text">
+                                    <i class='fa fa-language'></i>
+                                </span>
+                            </div>
+                            <select class=" form-control" data-toggle="select" id="langname" (focus)="focus16 = true"
+                                (blur)="focus16 = false" placeholder="Language" [(ngModel)]="language.language_name"
+                                name="langname" #langname="ngModel" required>
+                                <option *ngFor="let language of languages" [value]="language.language_name">
+                                    {{language.language_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" custom-control custom-checkbox mb-3 col-md-2">
+                    <input class=" custom-control-input" id="read" name="read" type="checkbox"
+                        [(ngModel)]="language.read" #read="ngModel" />
+                    <label class=" custom-control-label" for="read">
+                        {{ 'Read' | translate }}
+                    </label>
+                </div>
+                <div class=" custom-control custom-checkbox mb-3 col-md-2">
+                    <input class=" custom-control-input" id="write" name="write" type="checkbox"
+                        [(ngModel)]="language.write" #write="ngModel" />
+                    <label class=" custom-control-label" for="write">
+                        {{ 'Write' | translate }}
+                    </label>
+                </div>
+                <div class=" custom-control custom-checkbox mb-3 col-md-2">
+                    <input class=" custom-control-input" id="speak" name="speak" type="checkbox"
+                        [(ngModel)]="language.speak" #speak="ngModel" />
+                    <label class=" custom-control-label" for="speak">
+                        {{ 'Speak' | translate }}
+                    </label>
+                </div>
+            </div>
+            <div class=" row">
+                <div class="col-md-8 modal-footer">
+
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="submit" class="btn btn-primary mt-4" [disabled]="!langAdd.form.valid">
+                        {{langBtnText}}
+                    </button>
+                </div>
+                <div class="col-md-2 modal-footer">
+                    <button type="button" class="btn btn-default" (click)="langmodalRef.hide()">{{ 'Close' | translate }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<div class=" container-fluid mt--6">
+    <div class=" row">
+        <div class=" col">
+            <div class=" card">
+                <div class=" card-header border-0">
+                    <h3 class=" mb-0">{{ 'Profile' | translate }}</h3>
+                </div>
+                <div class=" table-responsive">
+                    <div id='gfg'>
+                        <accordion [isAnimated]="true" [closeOthers]="true">
+                            <accordion-group heading="Basic Details">
+                                <div class=" card-body">
+                                    <form #basicprofile="ngForm" (ngSubmit)="createProfile()">
+                                        <div class=" row">
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus17 === true }">
+                                                    <label class=" form-control-label" for="mobileNo">
+                                                        {{ 'First Name' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="ni ni-single-02"> </i>
+                                                            </span>
+                                                        </div>
+                                                        <input class=" form-control" placeholder="First Name"
+                                                            type="text" (focus)="focus17 = true"
+                                                            (blur)="focus17 = false" id="fname" required
+                                                            [(ngModel)]="user.first_name" name="fname"
+                                                            #fname="ngModel" />
+                                                    </div>
+                                                    <div *ngIf="fname.invalid && (fname.dirty || fname.touched)" class="alert alert-danger">
+                                                        <div *ngIf="fname.errors.required">
+                                                          FirstName is required 
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus18 === true }">
+                                                    <label class=" form-control-label" for="dob">
+                                                        {{ 'Last Name' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="ni ni-single-02"> </i>
+                                                            </span>
+                                                        </div>
+
+                                                        <input class="form-control" placeholder="Last Name" type="text"
+                                                            name="lname" (focus)="focus18 = true"
+                                                            (blur)="focus18 = false" required id="lname"
+                                                            [(ngModel)]="user.last_name" name="lname"
+                                                            #lname="ngModel" />
+                                                    </div>
+                                                    <div *ngIf="lname.invalid && (lname.dirty || lname.touched)" class="alert alert-danger">
+                                                        <div *ngIf="lname.errors.required">
+                                                          LastName is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus19 === true }">
+                                                    <label class=" form-control-label" for="email">
+                                                        {{ 'Email' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="ni ni-email-83"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input class="form-control" placeholder="Enter Email"
+                                                            type="email" #Email="ngModel"
+                                                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                                                            maxlength="50" [(ngModel)]="user.email" name="Email"
+                                                            (focus)="focus19 = true" (blur)="focus19 = false"
+                                                            (blur)="EmailFormatValidation()" required />
+                                                    </div>
+                                                    <div *ngIf="Email.invalid && (Email.dirty || Email.touched)" class="alert alert-danger">
+                                                        <div *ngIf="Email.errors.required">
+                                                          Email is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus20 === true }">
+                                                    <label class=" form-control-label" for="mobileNo">
+                                                        {{ 'Mobile No' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="fas fa-phone"> </i>
+                                                            </span>
+                                                        </div>
+                                                        <input class=" form-control" placeholder="Mobile No" type="text"
+                                                            (focus)="focus20 = true" (blur)="focus20 = false" id="mobileNo"
+                                                            required [(ngModel)]="user.mobile_no" name="mobileno"
+                                                            #mobileno="ngModel" />
+                                                    </div>
+                                                    <div *ngIf="mobileno.invalid && (mobileno.dirty || mobileno.touched)" class="alert alert-danger">
+                                                        <div *ngIf="mobileno.errors.required">
+                                                          Mobile is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus21 === true }">
+                                                    <label class=" form-control-label" for="dob">
+                                                        {{ 'Date Of Birth' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="ni ni-album-2"> </i>
+                                                            </span>
+                                                        </div>
+
+                                                        <input class="form-control" placeholder="Enter DOB" type="date"
+                                                            name="dob" (focus)="focus21 = true" (blur)="focus21 = false"
+                                                            required id="dob" [(ngModel)]="user.dob" name="dob"
+                                                            #dob="ngModel" />
+                                                    </div>
+                                                    <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="alert alert-danger">
+                                                        <div *ngIf="dob.errors.required">
+                                                          DOB is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus22 === true }">
+                                                    <label class=" form-control-label" for="gender">
+                                                        {{ 'Gender' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="fas fa-venus-mars"></i>
+                                                            </span>
+                                                        </div>
+                                                        <select class=" form-control" data-toggle="select" id="gender"
+                                                            (focus)="focus22 = true" (blur)="focus22 = false"
+                                                            placeholder="Gender" required [(ngModel)]="profile.gender"
+                                                            name="gender" #gender="ngModel">
+                                                            <option value="Male"> Male </option>
+                                                            <option value="Female"> Female </option>
+                                                        </select>
+                                                        <div *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="alert alert-danger">
+                                                            <div *ngIf="gender.errors.required">
+                                                              Gender is required
+                                                            </div>
+                                                          </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus23 === true }">
+                                                    <label class=" form-control-label" for="profiletype">
+                                                        {{ 'Profile Type' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="far fa-id-badge"></i>
+                                                            </span>
+                                                        </div>
+                                                        <select class=" form-control" data-toggle="select"
+                                                            id="profiletype" (focus)="focus23 = true"
+                                                            (blur)="focus23 = false" placeholder="Profile Type"
+                                                            [(ngModel)]="profile.profile_type" name="profiletype"
+                                                            #profiletype="ngModel" required>
+                                                            <option value="Fresher"> Fresher </option>
+                                                            <option value="Experienced"> Experienced </option>
+                                                        </select>
+                                                    </div>
+                                                    <div *ngIf="profiletype.invalid && (profiletype.dirty || profiletype.touched)" class="alert alert-danger">
+                                                        <div *ngIf="profiletype.errors.required">
+                                                          Profile Type is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus24 === true }">
+                                                    <label class=" form-control-label" for="totalexp">
+                                                        {{ 'Total Experience' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class=" fas fa-envelope"> </i>
+                                                            </span>
+                                                        </div>
+                                                        <select class=" form-control" data-toggle="select" id="totalexp"
+                                                            (focus)="focus24 = true" (blur)="focus24 = false"
+                                                            placeholder="Total Experience"
+                                                            [(ngModel)]="profile.total_experience"
+                                                            name="totalexperience" #totalexperience="ngModel" required>
+                                                            <option value="0"> 0 </option>
+                                                            <option value="1"> 1 </option>
+                                                            <option value="2"> 2 </option>
+                                                            <option value="3"> 3 </option>
+                                                            <option value="4"> 4 </option>
+                                                            <option value="5"> 5 </option>
+                                                            <option value="6"> 6 </option>
+                                                            <option value="7"> 7 </option>
+                                                            <option value="8"> 8 </option>
+                                                            <option value="9"> 9 </option>
+                                                            <option value="10"> 10 </option>
+                                                        </select>
+                                                    </div>
+                                                    <div *ngIf="totalexperience.invalid && (totalexperience.dirty || totalexperience.touched)" class="alert alert-danger">
+                                                        <div *ngIf="totalexperience.errors.required">
+                                                          Total Experience is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus25 === true }">
+                                                    <label class=" form-control-label" for="crtloc">
+                                                        {{ 'Current Location' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class='fa fa-location-arrow'></i>
+                                                            </span>
+                                                        </div>
+                                                        <select class=" form-control" data-toggle="select" id="crtloc"
+                                                            (focus)="focus25 = true" (blur)="focus25 = false"
+                                                            placeholder="Current Location"
+                                                            [(ngModel)]="profile.current_location"
+                                                            name="currentlocation" #currentlocation="ngModel">
+                                                            <option *ngFor="let city of cities" [value]="city.id">
+                                                                {{city.name}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div *ngIf="currentlocation.invalid && (currentlocation.dirty || currentlocation.touched)" class="alert alert-danger">
+                                                        <div *ngIf="currentlocation.errors.required">
+                                                          Current Location is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+
+                                        <div class=" row">
+                                            <div class=" col-md-3">
+                                                <div class=" form-group" [ngClass]="{ focused: focus26 === true }">
+                                                    <label class=" form-control-label" for="csSalary">
+                                                        {{ 'Current Salary' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class="far fa-id-inr"></i>
+                                                            </span>
+                                                        </div>
+                                                        <select class=" form-control" data-toggle="select" id="csSalary" (focus)="focus26 = true"
+                                                        (blur)="focus26 = false" placeholder="Salary" [(ngModel)]="profile.current_salary" name="csSalary"
+                                                        #csSalary="ngModel" required>
+                                                        <option value="2-3 Lakhs "> 2-3 Lakhs </option>
+                                                        <option value="3-5 Lakhs"> 3-5 Lakhs </option>
+                                                        <option value="5-7 Lakhs"> 5-7 Lakhs </option>
+                                                        <option value="7-9 Lakhs"> 7-9 Lakhs</option>
+                                                        <option value="9-11 Lakhs"> 9-11 Lakhs</option>
+                                                        <option value="11-13 Lakhs"> 11-13 Lakhs</option>
+                                                        <option value="13-15 Lakhs"> 13-15 Lakhs</option>
+                                                        <option value="15-17 Lakhs"> 15-17 Lakhs</option>
+                                                        <option value="17-20 Lakhs"> 17-20 Lakhs</option>
+                                                        <option value="20-24 Lakhs"> 20-24 Lakhs</option>
+                                                    </select>
+                                                    </div>
+                                                    <div *ngIf="csSalary.invalid && (csSalary.dirty || csSalary.touched)" class="alert alert-danger">
+                                                        <div *ngIf="csSalary.errors.required">
+                                                          Current Salary is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+
+                                            <div class=" col-md-3">
+                                                <div class=" form-group" [ngClass]="{ focused: focus27 === true }">
+                                                    <label class=" form-control-label" for="totalexp">
+                                                        {{ 'Currency' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class=" fas fa-currency"> </i>
+                                                            </span>
+                                                        </div>
+                                                        <select class=" form-control" data-toggle="select" style="height: none"
+                                                        id="csCurrency" (focus)="focus27 = true"
+                                                        (blur)="focus27 = false" placeholder="Currency"
+                                                        [(ngModel)]="profile.cs_currency" name="csCurrency"
+                                                        #csCurrency="ngModel" required>
+                                                        <option *ngFor="let currency of currencies"
+                                                            [value]="currency.id">
+                                                            {{currency.currency_name}}
+                                                        </option>
+                                                    </select>
+                                                    </div>
+                                                    <div *ngIf="csCurrency.invalid && (csCurrency.dirty || csCurrency.touched)" class="alert alert-danger">
+                                                        <div *ngIf="csCurrency.errors.required">
+                                                          Currency is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+
+                                            <div class=" col-md-3">
+                                                <div class=" form-group" [ngClass]="{ focused: focus28 === true }">
+                                                    <label class=" form-control-label" for="esSalary">
+                                                        {{ 'Expected Salary' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class='fa fa-inr'></i>
+                                                            </span>
+                                                        </div>
+                                                        <select class=" form-control" data-toggle="select" id="esSalary" (focus)="focus26 = true"
+                                                                (blur)="focus26 = false" placeholder="Salary" [(ngModel)]="profile.expected_salary" name="esSalary"
+                                                                #esSalary="ngModel" required>
+                                                                <option value="2-3 Lakhs "> 2-3 Lakhs </option>
+                                                                <option value="3-5 Lakhs"> 3-5 Lakhs </option>
+                                                                <option value="5-7 Lakhs"> 5-7 Lakhs </option>
+                                                                <option value="7-9 Lakhs"> 7-9 Lakhs</option>
+                                                                <option value="9-11 Lakhs"> 9-11 Lakhs</option>
+                                                                <option value="11-13 Lakhs"> 11-13 Lakhs</option>
+                                                                <option value="13-15 Lakhs"> 13-15 Lakhs</option>
+                                                                <option value="15-17 Lakhs"> 15-17 Lakhs</option>
+                                                                <option value="17-20 Lakhs"> 17-20 Lakhs</option>
+                                                                <option value="20-24 Lakhs"> 20-24 Lakhs</option>
+                                                            </select>
+                                                    </div>
+                                                    <div *ngIf="esSalary.invalid && (esSalary.dirty || esSalary.touched)" class="alert alert-danger">
+                                                        <div *ngIf="esSalary.errors.required">
+                                                          Expected Salary is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div> 
+
+                                            <div class=" col-md-3">
+                                                <div class=" form-group" [ngClass]="{ focused: focus27 === true }">
+                                                    <label class=" form-control-label" for="totalexp">
+                                                        {{ 'Currency' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class=" fas fa-currency"> </i>
+                                                            </span>
+                                                        </div>
+                                                        <select class=" form-control" data-toggle="select" style="height: none"
+                                                        id="esCurrency" (focus)="focus27 = true"
+                                                        (blur)="focus27 = false" placeholder="Currency"
+                                                        [(ngModel)]="profile.es_currency" name="esCurrency"
+                                                        #esCurrency="ngModel" required>
+                                                        <option *ngFor="let currency of currencies"
+                                                            [value]="currency.id">
+                                                            {{currency.currency_name}}
+                                                        </option>
+                                                    </select>
+                                                    </div>
+                                                    <div *ngIf="esCurrency.invalid && (esCurrency.dirty || esCurrency.touched)" class="alert alert-danger">
+                                                        <div *ngIf="esCurrency.errors.required">
+                                                          Currency is required
+                                                        </div>
+                                                      </div>
+
+                                            </div>
+                                            </div>
+
+                                           </div>
+
+                                        <div class="row">
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus30 === true }">
+                                                    <label class=" form-control-label" for="prftloc">
+                                                       {{ 'Prefered Location' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class='fa fa-location-arrow'></i>
+                                                            </span>
+                                                        </div>
+                                                        <ngx-bootstrap-multiselect [options]="multiSelectCities"
+                                                            class=" form-control" data-toggle="select"
+                                                            id="preferredlocation" (focus)="focus30 = true"
+                                                            (blur)="focus30 = false" multiple
+                                                            [(ngModel)]="profile.preferred_location"
+                                                            name="preferredlocation" #preferredlocation="ngModel"
+                                                            required>
+                                                        </ngx-bootstrap-multiselect>
+                                                    </div>
+                                                    <div *ngIf="preferredlocation.invalid && (preferredlocation.dirty || preferredlocation.touched)" class="alert alert-danger">
+                                                        <div *ngIf="preferredlocation.errors.required">
+                                                          Location is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus31 === true }">
+                                                    <label class=" form-control-label" for="pincode">
+                                                        {{ 'Pincode' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class='fa fa-map-marker'></i>
+                                                            </span>
+                                                        </div>
+
+                                                        <input class=" form-control" placeholder="Pincode" type="number"
+                                                            (focus)="focus31 = true" (blur)="focus31 = false"
+                                                            id="pincode" [(ngModel)]="profile.pincode" name="pincode"
+                                                            #pincode="ngModel" />
+                                                    </div>
+                                                    <div *ngIf="pincode.invalid && (pincode.dirty || pincode.touched)" class="alert alert-danger">
+                                                        <div *ngIf="pincode.errors.required">
+                                                          Pincode is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+
+                                              <div class=" col-md-4" style="margin-left:-3%; padding-left:45px">
+                                                <div class=" form-group" [ngClass]="{ focused: focus32 === true }">
+                                                    <label class=" form-control-label" for="skills">
+                                                        {{ 'Skills' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <tag-input theme="regular-theme" [(ngModel)]="profile.skills"
+                                                            name="skills" #skills="ngModel" required name="Skills"
+                                                            secondaryPlaceholder="Add Skill"
+                                                            placeholder="Add More Skill" [modelAsStrings]="true">
+                                                        </tag-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class=" row">
+                                          
+  
+                                            <div class=" col-md-4">
+                                                <div class=" form-group" [ngClass]="{ focused: focus33 === true }">
+                                                    <label class=" form-control-label" for="address">
+                                                        {{ 'Address' | translate }}
+                                                    </label>
+                                                    <div class=" input-group input-group-merge">
+                                                        <div class=" input-group-prepend">
+                                                            <span class=" input-group-text">
+                                                                <i class='fa fa-address-card'></i>
+                                                            </span>
+                                                        </div>
+                                                        <textarea class=" form-control" id="address" resize="none"
+                                                            rows="3" placeholder="Address" (focus)="focus33 = true"
+                                                            (blur)="focus33 = false" [(ngModel)]="profile.address"
+                                                            name="address" #address="ngModel"></textarea>
+
+                                                    </div>
+                                                    <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger">
+                                                        <div *ngIf="address.errors.required">
+                                                          Address is required
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class=" col-md-10">
+                                            </div>
+                                            <div class=" col-md-2">
+                                                <button type="submit" class="btn btn-primary mt-4"
+                                                    >
+                                                    {{ 'Save' | translate }}
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </accordion-group>
+
+                            <accordion-group heading="Experience">  
+                                <div class=" row pad">
+                                    <div class=" col-md-4">
+
+                                    </div>
+                                    <div class=" col-md-4">
+
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <button *ngIf=" profile.profile_type === 'Experienced'"
+                                            class=" btn btn-icon btn-primary btn-sm float-right pull-right"
+                                            type="button" accordion-heading (click)="addExperience(template)">
+                                            <span class=" btn-inner--icon"> <i class=" ni ni-add"> </i>
+                                                {{ 'Add Experience' | translate }}</span>
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                                <div class=" card"
+                                    *ngFor="let experience of profile.experience; let childcolindex = index">
+                                    <div class=" card-body" (click)="updateExperience(template,experience)">
+                                        <h5 class=" h2 card-title mb-0">{{experience.company_name}} -
+                                            {{experience.designation}}</h5>
+
+                                        <small class=" text-muted">
+                                            {{experience.start_date | date:'MMM, yyyy'}} to
+                                            <span *ngIf="experience.present_company"> {{ 'Present' | translate }}</span>
+                                            <span
+                                                *ngIf="!experience.present_company">{{experience.end_date | date:'MMM, yyyy'}}</span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </accordion-group>
+
+                            <accordion-group heading="Education">
+                                <div class=" row pad">
+                                    <div class=" col-md-4">
+
+                                    </div>
+                                    <div class=" col-md-4">
+
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <button class=" btn btn-icon btn-primary btn-sm float-right pull-right"
+                                            type="button" accordion-heading (click)="addEducation(edutemplate)">
+                                            <span class=" btn-inner--icon"> <i class=" ni ni-add"> </i> {{ 'Add Education' | translate }}
+                                                </span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class=" table-responsive">
+                                    <table class=" table align-items-center table-flush">
+                                        <thead class=" thead-light">
+
+                                            <tr>
+                                                <th> {{ 'Course Name' | translate }}</th>
+                                                <th>Specialization {{ 'Specialization' | translate }}</th>
+                                                <th> {{ 'University' | translate}} </th>
+                                                <th>{{ 'Passed Out Year' | translate}}</th>
+                                                <th style="text-align:center">{{ 'Percentage | translate }}</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let education of profile.education; let childcolindex = index">
+                                                <td class=" table-user">
+                                                    <b> {{education.course_name}} </b>
+                                                </td>
+
+                                                <td>
+                                                    {{education.course_specialization}}</td>
+
+                                                <td>
+                                                    {{education.university_name}}
+                                                </td>
+
+                                                <td style="text-align: center">
+                                                    <span class=" text-muted">
+                                                        {{education.passed_out_year}}</span>
+                                                </td>
+                                                <td style="text-align: center">
+                                                    {{education.percentage}}
+                                                </td>
+                                                <td class=" table-actions">
+                                                    <a class="table-action" tooltip="Edit product" placement="top"
+                                                        href="javascript:void(0)"
+                                                        (click)="updateEducation(edutemplate,education)">
+                                                        <i class=" fas fa-user-edit"> </i>
+                                                    </a>
+
+                                                    <!-- <a class=" table-action table-action-delete"
+                                                        tooltip="Delete product" placement="top"
+                                                        href="javascript:void(0)">
+                                                        <i class=" fas fa-trash"> </i>
+                                                    </a> -->
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </accordion-group>
+
+                            <accordion-group heading="Certification">
+                                <div class=" row pad">
+                                    <div class=" col-md-4">
+
+                                    </div>
+                                    <div class=" col-md-4">
+
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <button class=" btn btn-icon btn-primary btn-sm float-right pull-right"
+                                            type="button" accordion-heading (click)="addCertification(crttemplate)">
+                                            <span class=" btn-inner--icon"> <i class=" ni ni-add"> </i>{{ 'Add Certification' | translate }}
+                                                </span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class=" table-responsive">
+                                    <table class=" table align-items-center table-flush">
+                                        <thead class=" thead-light">
+                                            <tr>
+                                                <th>{{'Certification Name' | translate }}</th>
+                                                <th>{{ 'Provider' | translate }}</th>
+                                                <th>{{ 'Validity' | translate }}</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let certification of profile.certifications_and_awards; let childcolindex = index">
+                                                <td class=" table-user">
+                                                    <b> {{certification.certification_name}} </b>
+                                                </td>
+
+                                                <td>
+                                                    {{certification.certification_provider}}</td>
+
+                                                <td style="text-align:center">
+                                                    {{certification.validity}}
+                                                </td>
+
+                                                <td class=" table-actions">
+                                                    <a class="table-action" tooltip="Edit product" placement="top"
+                                                        href="javascript:void(0)"
+                                                        (click)="updateCertification(crttemplate,certification)">
+                                                        <i class=" fas fa-user-edit"> </i>
+                                                    </a>
+
+                                                    <!-- <a class=" table-action table-action-delete"
+                                                        tooltip="Delete product" placement="top"
+                                                        href="javascript:void(0)">
+                                                        <i class=" fas fa-trash"> </i>
+                                                    </a> -->
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </accordion-group>
+
+                            <accordion-group heading="Languages">
+                                <div class=" row pad">
+                                    <div class=" col-md-4">
+
+                                    </div>
+                                    <div class=" col-md-4">
+
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <button class=" btn btn-icon btn-primary btn-sm float-right pull-right"
+                                            type="button" accordion-heading (click)="addLanguage(langtemplate)">
+                                            <span class=" btn-inner--icon"> <i class=" ni ni-add"> </i> {{ 'Add Language' | translate }}
+                                                </span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class=" row pad">
+                                    <div class=" col-md-3"
+                                        *ngFor="let language of profile.known_language; let childcolindex = index">
+                                        <div class=" card">
+                                            <div class=" card-body" (click)="updateLanguage(langtemplate,language)">
+                                                <h5 class=" h2 card-title mb-0">{{language.language_name}}</h5>
+
+                                                <small class=" text-muted">
+                                                    <span *ngIf="language.read">{{ 'Read' | translate }}</span>
+                                                    <span class="textpadding" *ngIf="language.write">{{ 'Write' | translate }}</span>
+                                                    <span class="textpadding" *ngIf="language.speak">{{ 'Speak' | translate }}</span>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </accordion-group>
+
+                            <accordion-group heading="Documents">
+                                <form #docAdd="ngForm">
+                                    <div class=" row">
+                                        <div class=" col-md-6">
+                                            <div class=" form-group" [ngClass]="{ focused: focus28 === true }">
+                                                <label class=" form-control-label" for="companyname">
+                                                    {{ 'Document Type' | translate }}
+                                                </label>
+                                                <div class=" input-group input-group-merge">
+                                                    <div class=" input-group-prepend">
+                                                        <span class=" input-group-text">
+                                                            <i class="fa fa-building" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+
+                                                    <select class=" form-control" data-toggle="select" id="doc"
+                                                        (focus)="focus28 = true" (blur)="focus28 = false"
+                                                        [(ngModel)]="selectedDocument.document_type_value"
+                                                        #doc="ngModel" required name="doc">
+                                                        <option *ngFor="let document of documents"
+                                                            [value]="document.document_type_value">
+                                                            {{document.document_type}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" col-md-6"
+                                            *ngIf="selectedDocument.document_type_value != undefined">
+                                            <div class=" form-group" [ngClass]="{ focused: focus29 === true }">
+                                                <label class=" form-control-label" for="dob">
+                                                    {{ 'Alias Name' | translate }}
+                                                </label>
+                                                <div class=" input-group input-group-merge">
+                                                    <div class=" custom-file">
+                                                        <input class="form-control" type="text" id="aname"
+                                                            (focus)="focus33 = true" (blur)="focus33 = false"
+                                                            [(ngModel)]="selectedDocument.alias_name" #aname="ngModel"
+                                                            required name="aname" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class=" col-md-6"
+                                            *ngIf="selectedDocument.document_type_value != undefined && selectedDocument.alias_name != undefined && selectedDocument.alias_name.trim() != '' ">
+                                            <div class=" form-group" [ngClass]="{ focused: focus29 === true }">
+                                                <label class=" form-control-label" for="dob">
+                                                    {{ 'File' | translate }}
+                                                </label>
+                                                <div class=" input-group input-group-merge">
+                                                    <div class=" custom-file">
+
+                                                        <input class=" custom-file-input" id="customFileLang" lang="en"
+                                                            type="file" (change)="uploadDocument($event)" />
+                                                        <label class=" custom-file-label" for="customFileLang">
+                                                            {{ 'Select file' | translate }}
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" row">
+                                        <div class=" col-md-4"
+                                            *ngFor="let doc of profile.profile_docs; let childcolindex = index">
+                                            <div class=" card">
+                                                <div class=" card-body">
+                                                    <h5 class=" h2 card-title mb-0">{{doc.document_type}}</h5>
+                                                    <h8 class=" h6 card-title mb-0">{{doc.alias_name}}</h8>
+                                                    <h5 class=" h4 card-title mb-0">{{doc.fileName}}</h5>
+                                                    <h8 class=" h6 card-title mb-0">uploaded on:
+                                                        {{doc.created_at | date: 'dd-MM-YYYY h:mm a'}}</h8>
+                                                    <small class=" text-muted">
+                                                        <a href="{{doc.document_location_url}}"
+                                                            class="font-weight-bold ml-1" target="_blank"><i
+                                                                class="fas fa-download"></i></a>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </accordion-group>
+                        </accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
